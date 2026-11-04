@@ -1,0 +1,26 @@
+.leaflet-tooltip.region-label {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #1206c2 !important;
+    font-size: 12px;
+    pointer-events: none;
+}
+
+.mapSection {
+  height: 85vh;
+  width: 80vw;
+  background-color: #d1dce2;
+}
+
+.mapContainer {
+  height: 100%;
+  width: 100%;
+}
+
+.mapLayer {
+    stroke: #2e2d68;
+    stroke-width: 2px;
+    fill-opacity: 0.1;
+}
+
