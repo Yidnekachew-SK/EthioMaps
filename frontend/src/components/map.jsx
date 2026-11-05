@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, LayersControl, GeoJSON } from 'react-leaflet';
+import { MapContainer, LayersControl, GeoJSON, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import '../styles/map-styles.css';
+
+function ZoomHandler({ setZoom }) {
+  const map = useMapEvents({
+    zoomend() {
+      setZoom(map.getZoom());
+    },
+  });
+  return null;
+}
 
 export default function CustomLayersMap() {
   const [layer1Data, setLayer1Data] = useState(null);
   const [layer2Data, setLayer2Data] = useState(null);
   const [layer3Data, setLayer3Data] = useState(null);
+  const [zoom, setZoom] = useState(6);
 
   useEffect(() => {
     Promise.all([
@@ -45,9 +55,10 @@ export default function CustomLayersMap() {
         zoom={6}
         className='mapContainer'
       >
+        <ZoomHandler setZoom={setZoom} />
         <LayersControl position="topright">
           
-          {layer1Data && (
+          {layer1Data && zoom < 7 && (
             <LayersControl.Overlay checked name="Layer 1">
               <GeoJSON 
                 key={`layer1-${layer1Data.features.length}`}
@@ -58,9 +69,10 @@ export default function CustomLayersMap() {
             </LayersControl.Overlay>
           )}
 
-          {layer2Data && (
+          {layer2Data && zoom >= 7 && zoom <= 9 && (
             <LayersControl.Overlay checked name="Layer 2">
               <GeoJSON 
+                key={`layer2-${layer2Data.features.length}`}
                 data={layer2Data} 
                 className='mapLayer' 
                 onEachFeature={onEachFeature}
@@ -68,12 +80,13 @@ export default function CustomLayersMap() {
             </LayersControl.Overlay>
           )}
 
-          {layer3Data && (
+          {layer3Data && zoom > 9 && (
             <LayersControl.Overlay checked name="Layer 3">
               <GeoJSON 
+                key={`layer3-${layer3Data.features.length}`}
                 data={layer3Data} 
                 className='mapLayer'
-                //onEachFeature={onEachFeature}
+                onEachFeature={onEachFeature}
               />
             </LayersControl.Overlay>
           )}
