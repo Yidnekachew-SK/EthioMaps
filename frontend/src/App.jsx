@@ -1,16 +1,17 @@
-import { useState } from 'react';
-import MapComponent from './components/map';
-import Nav from './components/nav';
-import './styles/app.css';
+import { createBrowserRouter, RouterProvider } from "react-router";
+
+import Login from './auth/login';
+import SignUp from './auth/signup';
+
+const router = createBrowserRouter([
+    { path: "/", element: <Login /> },
+    { path: "/signup", element: <SignUp /> },
+]);
 
 function App() {
 
   return (
-    <>
-      <Nav />
-      <MapComponent />
-    </>
-    
+    <RouterProvider router={router} />
   )
 }
 
