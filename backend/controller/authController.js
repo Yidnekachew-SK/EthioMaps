@@ -35,10 +35,10 @@ const signup = [
     async (req, res) => {
         const error = validationResult(req);
         if(!error.isEmpty()) {
-            res.status(400).json({errors: error.array()})
+            return res.status(400).json({errors: error.array()})
         }
         const { fullname, username, password } = matchedData(req);
-        const hashedPassword = bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await authService.createUser(fullname, username, hashedPassword);
 
         const token = jwt.sign(
@@ -47,9 +47,9 @@ const signup = [
         { expiresIn: "1h" }
         );
         res.json({ token, user: {
-            id: user.id,
-            username: user.username,
-            role: user.role
+            id: newUser.id,
+            username: newUser.username,
+            role: newUser.role
         }});
     }
 ]

@@ -1,7 +1,7 @@
 const { prisma } = require('../lib/prisma');
 
 async function createUser(name, username, password) {
-    await prisma.users.create({
+    return await prisma.users.create({
         data: {
             name,
             username,

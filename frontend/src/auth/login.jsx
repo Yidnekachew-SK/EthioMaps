@@ -11,7 +11,7 @@ function Login() {
         e.preventDefault();
 
         try {
-            const response = await fetch("/api/login", {
+            const response = await fetch("http://localhost:3000/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),
@@ -26,7 +26,7 @@ function Login() {
 
             localStorage.setItem("token", data.token);
 
-            window.location.href = "/";  // to the next page to be build 
+            window.location.href = "/upload";
         } catch (err) {
             console.error(err);
         }
@@ -34,21 +34,23 @@ function Login() {
     return(
         <>
             <Nav />
-            <form onSubmit={handleLogin}>
-            <div>
-                <label htmlFor="username">Username: </label>
-                <input type="text" name="username" id="username" 
-                    value={username} onChange={(e) => setUsername(e.target.value)} />
-                {errors[0] && <p className="error">{errors[0]}</p>}
+            <div className="formSection">
+                <form className="loginForm" onSubmit={handleLogin}>
+                    <div>
+                        <label htmlFor="username">Username: </label>
+                        <input type="text" name="username" id="username" 
+                            value={username} onChange={(e) => setUsername(e.target.value)} />
+                        {errors[0] && <p className="error">{errors[0]}</p>}
+                    </div>
+                    <div>
+                        <label htmlFor="password">Password: </label>
+                        <input type="password" name="password" id="password" 
+                            value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        {errors[1] && <p className="error">{errors[1]}</p>}
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
             </div>
-            <div>
-                <label htmlFor="password">Password: </label>
-                <input type="password" name="password" id="password" 
-                    value={password} onChange={(e) => setPassword(e.target.value)}/>
-                {errors[1] && <p className="error">{errors[1]}</p>}
-            </div>
-            <button type="submit">Login</button>
-        </form>
         </>
     )
 }

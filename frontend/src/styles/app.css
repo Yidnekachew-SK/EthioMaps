@@ -1,12 +1,27 @@
-.navigation {
+nav {
     padding: 5px 10px;
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid gray;
 }
 
 .title {
     font-size: 20px;
     padding: 2px;
-    text-align: center;
     font-family:Georgia, 'Times New Roman', Times, serif;
 }
 
+.navigationLinks {
+    font-size: 17px;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+    margin-right: 20px;
+}
+
+.links {
+    padding: 3px 5px;
+    text-decoration: none;
+}
