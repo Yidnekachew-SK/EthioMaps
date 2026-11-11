@@ -27,6 +27,9 @@ function UploadFile() {
 
             const response = await fetch("http://localhost:3000/files/upload", {
                 method: "POST",
+                headers: {
+                    "file-name": file.name
+                },
                 body: formData
             });
 

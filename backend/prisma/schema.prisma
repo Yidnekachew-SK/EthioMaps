@@ -14,3 +14,13 @@ model Users {
   password String
   role String @default("user")
 }
+
+model GeoTiffFiles {
+  id Int @id @default(autoincrement())
+  name String
+  originalName String
+  type String @default("GeoTiff")
+  filePath String
+  fileSizeInMb Decimal
+  createdAt DateTime @default(now())
+}

@@ -1,5 +1,6 @@
 const path = require("path");
 const fs = require("fs");
+const fileService = require('../services/fileService');
 
 uploadFile = async (req, res) => {
 
@@ -13,29 +14,17 @@ uploadFile = async (req, res) => {
             });
         }
 
-        const extension = path.extname(
-            file.originalname
-        ).toLowerCase();
+        const extension = path.extname(file.originalname).toLowerCase();
+        const relativePath = path.relative(process.cwd(),file.path);
 
-        let fileType;
+        if ([".tif", ".tiff"].includes(extension)) {
+            await fileService.storeTiffFileInfo(file, req.body.fileName, relativePath);
 
-        if ([".geojson", ".json"].includes(extension)) {
-            fileType = "GeoJSON";
-        } else if ([".tif", ".tiff"].includes(extension)) {
-            fileType = "GeoTIFF";
+            return res.status(200).json({
+                success: true,
+                message: "File received successfully",
+            });
         }
-
-        return res.status(200).json({
-            success: true,
-            message: "File received successfully",
-            file: {
-                originalName: file.originalname,
-                storedName: file.filename,
-                size: file.size,
-                type: fileType,
-                temporaryPath: file.path
-            }
-        });
 
     } catch (error) {
         console.error(error);
